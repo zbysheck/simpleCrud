@@ -21,14 +21,16 @@
                     <td>{{ station.uuid }}</td>
                     <td>{{ station.location }}</td>
                     <td>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-                            edit
-                        </button>
+                        <form action="{{ path("app_station_add") }}">
+                            <input type="hidden" name="uuid" value="{{ station.uuid }}">
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="edit">
+                        </form>
                     </td>
                     <td>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
-                            remove
-                        </button>
+                        <form action="{{ path("app_station_remove") }}" method="post">
+                            <input type="hidden" name="uuid" value="{{ station.uuid }}">
+                            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" value="remove">
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
