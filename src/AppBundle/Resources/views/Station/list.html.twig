@@ -1,24 +1,27 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}AppBundle:Station:List{% endblock %}
+{%  block headertitle %} List of Stations {% endblock %}
 
 {% block body %}
-<body>
-<h1>Welcome to the Station:List page</h1>
-</body>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+            <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Station Name</th>
+                <th>UUID</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+        {%  for station in stations %}
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">{{ station.metaData.name }}</td>
+                    <td>{{ station.uuid }}</td>
+                    <td>{{ station.location }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
 
-
-{% endblock %}
-{% block javascripts %}
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajax({ url: "database/update.html",
-            context: document.body,
-            success: function(){
-                alert("done");
-            }});
-    });
-</script>
 
 {% endblock %}
