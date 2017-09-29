@@ -71,6 +71,7 @@ class StationController extends Controller
             },
             "id": 1
         }';
+        $this->curlIt($json);
         $json = '{     "jsonrpc": "2.0",     "method": "location_list",     "params": {         "key": "'.$this->key.'"     },     "id": 1 }';
         $result = $this->curlIt($json)->result;
         return $this->render('AppBundle:Station:add.html.twig', array(
@@ -105,7 +106,67 @@ class StationController extends Controller
 
     }
 
-    
+    /**
+     * @Route("/edit/submit")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editSubmitAction(Request $request)
+    {
+        $uuid = $request->request->get("uuid");
+        $name = $request->request->get("name");
+        $json = '{
+            "jsonrpc": "2.0",
+            "method": "station_update",
+            "params": {
+                "key": "'.$this->key.'",
+                "uuid": "'.$uuid.'",
+                "metaData": {
+                    "name": "'.$name.'"
+                }
+            },
+            "id": 1
+        }';
+        $result = $this->curlIt($json);
+        $json = '{     "jsonrpc": "2.0",     "method": "station_list",     "params": {            "key": "'. $this->key .'"     },     "id": 1 }';
+        $result = $this->curlIt($json)->result;
+        return $this->render('AppBundle:Station:list.html.twig', array(
+            "stations" => $result
+        ));
+
+    }
+
+    /**
+     * @Route("/edit/{uuid}")
+     */
+    public function editAction($uuid)
+    {
+        $json = '{     "jsonrpc": "2.0",     "method": "location_list",     "params": {         "key": "'.$this->key.'"     },     "id": 1 }';
+        $locations = $this->curlIt($json)->result;
+
+        $json = '{     "jsonrpc": "2.0",     "method": "station_list",     "params": {            "key": "'. $this->key .'"     },     "id": 1 }';
+        $stations = $this->curlIt($json)->result;
+        $chosenStation = 0;
+        foreach ($stations as $station){
+            if ($station->uuid == $uuid){
+                $chosenStation = $station;
+                break;
+            }
+            dump($station->uuid);
+            dump($uuid);
+
+            dump($chosenStation);
+
+        }
+        dump($chosenStation);
+        return $this->render('AppBundle:Station:edit.html.twig', array(
+            "locations" => $locations,
+            "station" => $chosenStation
+        ));
+
+    }
+
+
 
 
 

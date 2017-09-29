@@ -21,8 +21,9 @@
                     <td>{{ station.uuid }}</td>
                     <td>{{ station.location }}</td>
                     <td>
-                        <form action="{{ path("app_station_add") }}">
-                            <input type="hidden" name="uuid" value="{{ station.uuid }}">
+                        <form action="{{ path("app_station_edit", {"uuid": station.uuid}) }}">
+                            <input type="hidden" name="location" value="{{ station.location }}">
+                            <input type="hidden" name="name" value="{{ station.metaData.name }}">
                         <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="edit">
                         </form>
                     </td>

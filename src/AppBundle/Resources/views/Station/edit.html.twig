@@ -1,0 +1,35 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Station:List{% endblock %}
+{%  block headertitle %} Add Station {% endblock %}
+
+{% block body %}
+
+    <form action="{{ path("app_station_editsubmit") }}" method="post" id="addForm">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input type="hidden" name="uuid" value="{{ station.uuid }}">
+            <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ station.metaData.name }}">
+            <label class="mdl-textfield__label" for="name">Station Name</label>
+            <span class="mdl-textfield__error">Only letters</span>
+        </div>
+        <br/>
+        <br/>
+        <div class="mdl-selectfield mdl-js-selectfield">
+        <select name="location" id="location" form="addForm">
+            {% for location in locations %}
+            <option value="{{ location.uuid }}">{{ location.name }}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <br/>
+        <br/>
+        <input id="add" type="submit">
+
+    </form>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
