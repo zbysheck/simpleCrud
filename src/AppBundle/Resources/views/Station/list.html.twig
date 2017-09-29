@@ -10,6 +10,8 @@
                 <th class="mdl-data-table__cell--non-numeric">Station Name</th>
                 <th>UUID</th>
                 <th>Location</th>
+                <th>edit</th>
+                <th>remove</th>
             </tr>
             </thead>
             <tbody>
@@ -18,6 +20,16 @@
                     <td class="mdl-data-table__cell--non-numeric">{{ station.metaData.name }}</td>
                     <td>{{ station.uuid }}</td>
                     <td>{{ station.location }}</td>
+                    <td>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                            edit
+                        </button>
+                    </td>
+                    <td>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                            remove
+                        </button>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
