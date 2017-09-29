@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Station:List{% endblock %}
+
+{% block body %}
+<body>
+<h1>Welcome to the Station:List page</h1>
+</body>
+
+
+{% endblock %}
+{% block javascripts %}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({ url: "database/update.html",
+            context: document.body,
+            success: function(){
+                alert("done");
+            }});
+    });
+</script>
+
+{% endblock %}
