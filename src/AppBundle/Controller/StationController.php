@@ -7,13 +7,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Services\StationService;
 
 class StationController extends Controller
 {
-    private $url = 'https://api.feedback.quantumlab.co/v1';
     private $key = "c648c405-af1f-4286-b7fb-47eec4e7e565";
 
-    function curlIt($json){
+    function ccurlIt($json){
         $ch = curl_init( $this->url );
         curl_setopt( $ch, CURLOPT_POST, 1);
         curl_setopt( $ch, CURLOPT_POSTFIELDS, $json);
@@ -30,8 +30,9 @@ class StationController extends Controller
      */
     public function listAction()
     {
+        StationService::runJson("lala");
         $json = '{     "jsonrpc": "2.0",     "method": "station_list",     "params": {            "key": "'. $this->key .'"     },     "id": 1 }';
-        $result = $this->curlIt($json)->result;
+        $result = StationService::runJson($json)->result;
         return $this->render('AppBundle:Station:list.html.twig', array(
             "stations" => $result
         ));
@@ -43,7 +44,7 @@ class StationController extends Controller
     public function addAction()
     {
         $json = '{     "jsonrpc": "2.0",     "method": "location_list",     "params": {         "key": "'.$this->key.'"     },     "id": 1 }';
-        $result = $this->curlIt($json)->result;
+        $result = StationService::runJson($json)->result;
         return $this->render('AppBundle:Station:add.html.twig', array(
             "locations" => $result
         ));
@@ -71,9 +72,9 @@ class StationController extends Controller
             },
             "id": 1
         }';
-        $this->curlIt($json);
+        StationService::runJson($json);
         $json = '{     "jsonrpc": "2.0",     "method": "location_list",     "params": {         "key": "'.$this->key.'"     },     "id": 1 }';
-        $result = $this->curlIt($json)->result;
+        $result = StationService::runJson($json)->result;
         return $this->render('AppBundle:Station:add.html.twig', array(
             "locations" => $result
         ));
@@ -97,9 +98,9 @@ class StationController extends Controller
             },
             "id": 1
         }';
-        $result = $this->curlIt($json);
+        $result = StationService::runJson($json);
         $json = '{     "jsonrpc": "2.0",     "method": "station_list",     "params": {            "key": "'. $this->key .'"     },     "id": 1 }';
-        $result = $this->curlIt($json)->result;
+        $result = StationService::runJson($json)->result;
         return $this->render('AppBundle:Station:list.html.twig', array(
             "stations" => $result
         ));
@@ -127,9 +128,9 @@ class StationController extends Controller
             },
             "id": 1
         }';
-        $result = $this->curlIt($json);
+        $result = StationService::runJson($json);
         $json = '{     "jsonrpc": "2.0",     "method": "station_list",     "params": {            "key": "'. $this->key .'"     },     "id": 1 }';
-        $result = $this->curlIt($json)->result;
+        $result = StationService::runJson($json)->result;
         return $this->render('AppBundle:Station:list.html.twig', array(
             "stations" => $result
         ));
@@ -142,10 +143,10 @@ class StationController extends Controller
     public function editAction($uuid)
     {
         $json = '{     "jsonrpc": "2.0",     "method": "location_list",     "params": {         "key": "'.$this->key.'"     },     "id": 1 }';
-        $locations = $this->curlIt($json)->result;
+        $locations = StationService::runJson($json)->result;
 
         $json = '{     "jsonrpc": "2.0",     "method": "station_list",     "params": {            "key": "'. $this->key .'"     },     "id": 1 }';
-        $stations = $this->curlIt($json)->result;
+        $stations = StationService::runJson($json)->result;
         $chosenStation = 0;
         foreach ($stations as $station){
             if ($station->uuid == $uuid){
